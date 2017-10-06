@@ -2,7 +2,6 @@
 
 #include "../../include/R0CK3T/http_request.h"
 #include <iostream>
-#include <string>
 
 namespace example {
 

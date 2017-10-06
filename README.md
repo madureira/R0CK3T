@@ -1,12 +1,15 @@
 # R0CK3T
 An ultra-fast C++ micro web framework
 
+![stability-wip](https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg)
+
 ## How to use
 
 ```c++
+// file: product_controller.h
+
 #include "R0CK3T.h"
 #include <iostream>
-#include <string>
 
 using namespace R0CK3T;
 
@@ -22,10 +25,18 @@ public:
 		std::cout << "Id: " << request.urlParams.at("productId") << std::endl;
 	}
 };
+```
+```c++
+// file: main.cpp
+
+#include "R0CK3T.h"
+#include "product_controller.h"
+
+using namespace R0CK3T;
 
 int main()
 {
-	Server server("127.0.0.1", "8080", "C:/Users/rafael/projects/workspace/emscripten-test");
+	Server server("127.0.0.1", "8080", "/absolute/path/to/assets");
 
 	auto app = server.app();
 
@@ -37,3 +48,7 @@ int main()
 	return 0;
 }
 ```
+
+Access [http://localhost:8080/products](http://localhost:8080/products)
+
+or [http://localhost:8080/products/123](http://localhost:8080/products/123)
