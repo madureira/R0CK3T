@@ -49,6 +49,7 @@ int main()
 }
 ```
 
-Access [http://localhost:8080/products](http://localhost:8080/products)
+## Requirements
 
-or [http://localhost:8080/products/123](http://localhost:8080/products/123)
+* C++11
+* [Boost](http://www.boost.org/) (1.65.1)
