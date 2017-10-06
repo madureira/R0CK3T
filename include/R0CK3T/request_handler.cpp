@@ -2,7 +2,6 @@
 #include "mime_types.h"
 #include "http_response.h"
 #include "http_request.h"
-#include "resources.h"
 #include "app.h"
 #include <iostream>
 #include <cstdarg>

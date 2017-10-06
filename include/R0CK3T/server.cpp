@@ -1,5 +1,4 @@
 #include "server.h"
-#include "resources.h"
 
 namespace R0CK3T {
 
