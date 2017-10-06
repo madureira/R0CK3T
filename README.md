@@ -36,7 +36,7 @@ using namespace R0CK3T;
 
 int main()
 {
-	Server server("127.0.0.1", "8080", "/absolute/path/to/assets");
+	Server server("127.0.0.1", 8080, "/absolute/path/to/assets");
 
 	auto app = server.app();
 

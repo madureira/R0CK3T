@@ -2,7 +2,7 @@
 
 namespace R0CK3T {
 
-	Server::Server(const std::string& address, const std::string& port, const std::string& documentRoot)
+	Server::Server(const std::string& address, const int port, const std::string& documentRoot)
 		: m_ioService(), m_signals(m_ioService), m_acceptor(m_ioService), m_connectionManager(), m_socket(m_ioService), m_requestHandler(documentRoot)
 	{
 		m_app = std::make_shared<App>();
@@ -17,7 +17,7 @@ namespace R0CK3T {
 		awaitStop();
 
 		boost::asio::ip::tcp::resolver resolver(m_ioService);
-		boost::asio::ip::tcp::endpoint endpoint = *resolver.resolve({ address, port });
+		boost::asio::ip::tcp::endpoint endpoint = *resolver.resolve({ address, std::to_string(port) });
 		m_acceptor.open(endpoint.protocol());
 		m_acceptor.set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));
 		m_acceptor.bind(endpoint);

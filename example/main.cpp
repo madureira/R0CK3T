@@ -7,7 +7,7 @@ using namespace example;
 
 int main()
 {
-	Server server("127.0.0.1", "8080", "C:/Users/rafael/projects/workspace/emscripten-test");
+	Server server("127.0.0.1", 8080, "C:/Users/rafael/projects/workspace/emscripten-test");
 
 	auto app = server.app();
 

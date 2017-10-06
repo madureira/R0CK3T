@@ -17,7 +17,7 @@ namespace R0CK3T {
 		Server(const Server&) = delete;
 		Server& operator=(const Server&) = delete;
 
-		explicit Server(const std::string& address, const std::string& port, const std::string& documentRoot);
+		explicit Server(const std::string& address, const int port, const std::string& documentRoot);
 
 		std::shared_ptr<App> app();
 

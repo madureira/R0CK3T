@@ -26,11 +26,18 @@ namespace R0CK3T {
 
 			if (search != m_routesPtr.end())
 			{
-				reinterpret_cast<void(*)(const HttpRequest&)> (search->second)(request);
+				try {
+					reinterpret_cast<void(*)(const HttpRequest&)> (search->second)(request);
+				}
+				catch(const std::exception& e)
+				{
+					std::cerr << "Error trying to execute route function" << std::endl;
+					std::cerr << e.what() << std::endl;
+				}
 			}
 			else
 			{
-				std::cout << "Route no found!" << std::endl;
+				std::cerr << "Route no found!" << std::endl;
 			}
 		}
 
