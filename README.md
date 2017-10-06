@@ -1,4 +1,4 @@
-# R0CK3T
+# R0CK3T :rocket:
 An ultra-fast C++ micro web framework
 
 ![stability-wip](https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg)
