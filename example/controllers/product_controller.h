@@ -9,17 +9,17 @@ namespace example {
 
 	class ProductController {
 	public:
-		static void index(const HttpRequest& request)
+		static void index(const HttpRequest& request, HttpResponse& response)
 		{
 			std::cout << ">> List of products <<" << std::endl;
 		}
 
-		static void getById(const HttpRequest& request)
+		static void getById(const HttpRequest& request, HttpResponse& response)
 		{
-			std::cout << "Id: " << request.urlParams.at("productId") << std::endl;
+			std::cout << "Id: " << request.urlParams.at(":productId") << std::endl;
 		}
 
-		static void getByName(const HttpRequest& request)
+		static void getByName(const HttpRequest& request, HttpResponse& response)
 		{
 			std::cout << "Name: " <<  std::endl;
 		}

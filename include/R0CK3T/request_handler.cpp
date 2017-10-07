@@ -37,7 +37,7 @@ namespace R0CK3T {
 		if (!resourceMatch.empty())
 		{
 			m_app->extractParamsFromUrl(requestPath, resourceMatch, request);
-			m_app->exec(resourceMatch, request);
+			m_app->exec(resourceMatch, request, response);
 		}
 
 		if (requestPath[requestPath.size() - 1] == '/')

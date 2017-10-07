@@ -1,6 +1,7 @@
 #pragma once
 
 #include "http_request.h"
+#include "http_response.h"
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/regex.hpp>
 #include <iostream>
@@ -20,14 +21,14 @@ namespace R0CK3T {
 			m_routesPtr[route] = fn;
 		}
 
-		void exec(std::string route, const HttpRequest& request)
+		void exec(std::string route, const HttpRequest& request, HttpResponse& response)
 		{
 			auto search = m_routesPtr.find(route);
 
 			if (search != m_routesPtr.end())
 			{
 				try {
-					reinterpret_cast<void(*)(const HttpRequest&)> (search->second)(request);
+					reinterpret_cast<void(*)(const HttpRequest&, HttpResponse&)> (search->second)(request, response);
 				}
 				catch(const std::exception& e)
 				{
@@ -47,7 +48,7 @@ namespace R0CK3T {
 
 			for (auto res : m_routesPtr)
 			{
-				std::string url = boost::regex_replace(res.first, boost::regex("(:.[^/]+)"), "(.+[^/])");
+				std::string url = boost::regex_replace(res.first, boost::regex("(:.[^/]+)"), "(.[^/]+)");
 				url = "^" + url + "$";
 
 				if (boost::regex_search(resource, boost::regex(url, boost::regex::icase)))
