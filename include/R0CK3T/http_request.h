@@ -15,6 +15,15 @@ namespace R0CK3T {
 		int http_version_minor;
 		std::vector<Header> headers;
 		std::map<std::string, std::string> urlParams;
+
+		std::string getUrlParam(std::string key)
+		{
+			auto found = urlParams.find(key);
+			if (found != urlParams.end()) {
+				return found->second;
+			}
+			return "";
+		}
 	};
 
 }

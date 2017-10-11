@@ -14,9 +14,9 @@ namespace example {
 			std::cout << ">> List of products <<" << std::endl;
 		}
 
-		static void getById(const HttpRequest& request, HttpResponse& response)
+		static void getById(HttpRequest& request, HttpResponse& response)
 		{
-			std::cout << "Id: " << request.urlParams.at(":productId") << std::endl;
+			std::cout << "Id: " << request.getUrlParam("productId") << std::endl;
 		}
 
 		static void getByName(const HttpRequest& request, HttpResponse& response)

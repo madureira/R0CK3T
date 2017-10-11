@@ -15,12 +15,12 @@ using namespace R0CK3T;
 
 class ProductController {
 public:
-	static void index(const HttpRequest& request)
+	static void index(const HttpRequest& request, HttpResponse& response)
 	{
 		std::cout << ">> List of products <<" << std::endl;
 	}
 
-	static void getById(const HttpRequest& request)
+	static void getById(const HttpRequest& request, HttpResponse& response)
 	{
 		std::cout << "Id: " << request.urlParams.at("productId") << std::endl;
 	}
@@ -53,3 +53,9 @@ int main()
 
 * C++11
 * [Boost](http://www.boost.org/) (1.65.1)
+
+## Runnig Unit Tests
+
+```sh
+$ /R0CK3T/bin/tests/R0CK3T --log_level=test_suite
+```
