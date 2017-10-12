@@ -11,6 +11,7 @@ namespace R0CK3T {
 
 	void App::route(std::string route, void* fn)
 	{
+		route = removeLastSlash(route);
 		m_routesPtr[route] = fn;
 	}
 
@@ -37,6 +38,8 @@ namespace R0CK3T {
 
 	std::string App::findResource(std::string resource)
 	{
+		resource = removeLastSlash(resource);
+
 		std::string resourceMatch;
 
 		for (auto res : m_routesPtr)
@@ -57,7 +60,52 @@ namespace R0CK3T {
 
 	void App::extractParamsFromUrl(std::string requestUrl, std::string resource, HttpRequest& request)
 	{
-		request.urlParams["productId"] = "123";
+		std::string::const_iterator begin = resource.begin();
+		std::string::const_iterator end = resource.end();
+		boost::match_results<std::string::const_iterator> keyMatches;
+
+		std::vector<std::string> foundKeys;
+		
+		while (boost::regex_search(begin, end, keyMatches, boost::regex("(:.[^/]*)")))
+		{
+			std::string key(keyMatches[1].first, keyMatches[2].second);
+			boost::replace_all(key, ":", "");
+			request.urlParams[key] = "";
+			foundKeys.push_back(key);
+			begin = keyMatches[0].second;
+		}
+
+		if (foundKeys.size() > 0)
+		{
+			boost::smatch valueMatches;
+
+			std::string resourceToMatch = boost::regex_replace(resource, boost::regex("(:.[^/]+)"), "(.[^/]+)");
+
+			if (boost::regex_search(requestUrl, valueMatches, boost::regex(resourceToMatch, boost::regex::icase)))
+			{
+				int keyIdx = 0;
+				for (int i = 1; i < valueMatches.size(); i++)
+				{
+					std::string value(valueMatches[i].first, valueMatches[i].second);
+					request.urlParams[foundKeys.at(keyIdx)] = value;
+					keyIdx++;
+				}
+			}
+		}
+	}
+
+	std::string App::removeLastSlash(std::string uri)
+	{
+		if (uri.length() > 0) {
+			std::string::iterator it = uri.end() - 1;
+
+			if (*it == '/')
+			{
+				uri.erase(it);
+			}
+		}
+
+		return uri;
 	}
 
 }

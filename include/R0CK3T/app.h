@@ -22,6 +22,8 @@ namespace R0CK3T {
 		void extractParamsFromUrl(std::string requestUrl, std::string resource, HttpRequest& request);
 
 	private:
+		std::string removeLastSlash(std::string uri);
+
 		std::map<std::string, void*> m_routesPtr;
 	};
 
