@@ -58,7 +58,7 @@ int main()
 }
 ```
 
-## [Documentation](https://github.com/madureira/R0CK3T/Readme-Guide.md)
+## [Documentation](https://github.com/madureira/R0CK3T/blob/master/Readme-Guide.md)
 
 ## Libraries
 
