@@ -39,7 +39,7 @@ namespace R0CK3T {
 			m_app->extractParamsFromUrl(requestPath, resourceMatch, request);
 			m_app->exec(resourceMatch, request, response);
 		}
-
+		/*
 		if (requestPath[requestPath.size() - 1] == '/')
 		{
 			requestPath += "index.html";
@@ -73,6 +73,7 @@ namespace R0CK3T {
 		response.headers[0].value = std::to_string(response.content.size());
 		response.headers[1].name = "Content-Type";
 		response.headers[1].value = mime_types::extensionToType(extension);
+		*/
 	}
 
 	bool RequestHandler::urlDecode(const std::string& input, std::string& output)

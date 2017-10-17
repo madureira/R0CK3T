@@ -1,15 +1,22 @@
 #pragma once
 
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/path.hpp>
 #include <boost/asio.hpp>
 #include <iostream>
 #include <string>
 #include <memory>
+#include "vendors/nlohmann/json.hpp"
 #include "connection.h"
 #include "connection_manager.h"
 #include "request_handler.h"
 #include "app.h"
+#include "config.h"
 
 namespace R0CK3T {
+
+	using json = nlohmann::json;
 
 	class Server
 	{
@@ -17,7 +24,7 @@ namespace R0CK3T {
 		Server(const Server&) = delete;
 		Server& operator=(const Server&) = delete;
 
-		explicit Server(const std::string& address, const int port, const std::string& documentRoot);
+		explicit Server(std::string configFile = "");
 
 		std::shared_ptr<App> app();
 

@@ -96,7 +96,7 @@ namespace R0CK3T {
 
 	std::string App::removeLastSlash(std::string uri)
 	{
-		if (uri.length() > 0) {
+		if (uri.length() > 1) {
 			std::string::iterator it = uri.end() - 1;
 
 			if (*it == '/')

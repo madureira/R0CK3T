@@ -2,9 +2,34 @@
 
 namespace R0CK3T {
 
-	Server::Server(const std::string& address, const int port, const std::string& documentRoot)
-		: m_ioService(), m_signals(m_ioService), m_acceptor(m_ioService), m_connectionManager(), m_socket(m_ioService), m_requestHandler(documentRoot)
+	Server::Server(std::string configFile)
+		: m_ioService(), m_signals(m_ioService), m_acceptor(m_ioService), m_connectionManager(), m_socket(m_ioService), m_requestHandler("")
 	{
+		std::string slash(1, boost::filesystem::path::preferred_separator);
+
+		if (configFile.empty())
+		{
+			configFile = boost::filesystem::initial_path().string() + slash + "example\\config.json";
+		}
+
+		Settings settings;
+		std::ifstream file(configFile);
+
+		if (file.is_open())
+		{
+			json jsonObj;
+			file >> jsonObj;
+
+			if (!jsonObj.is_null())
+			{
+				settings.address = jsonObj.at("address").get<std::string>();
+				settings.port = jsonObj.at("port").get<std::string>();
+				settings.templatesPath = jsonObj.at("templatesPath").get<std::string>();
+			}
+		}
+
+		Config::getInstance().setSettings(settings);
+
 		m_app = std::make_shared<App>();
 		m_requestHandler.addApp(m_app);
 
@@ -13,11 +38,10 @@ namespace R0CK3T {
 #if defined(SIGQUIT)
 		m_signals.add(SIGQUIT);
 #endif
-
 		awaitStop();
 
 		boost::asio::ip::tcp::resolver resolver(m_ioService);
-		boost::asio::ip::tcp::endpoint endpoint = *resolver.resolve({ address, std::to_string(port) });
+		boost::asio::ip::tcp::endpoint endpoint = *resolver.resolve({ settings.address, settings.port });
 		m_acceptor.open(endpoint.protocol());
 		m_acceptor.set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));
 		m_acceptor.bind(endpoint);

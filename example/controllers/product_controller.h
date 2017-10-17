@@ -1,27 +1,32 @@
 #pragma once
 
 #include "../../include/R0CK3T.h"
-#include <iostream>
+#include <map>
+#include <string>
 
 namespace example {
 
 	using namespace R0CK3T;
 
-	class ProductController {
+	class ProductController
+	{
 	public:
 		static void index(const HttpRequest& request, HttpResponse& response)
 		{
-			std::cout << ">> List of products <<" << std::endl;
+			mstch::map data { { "title", std::string{ "List!!!!!!" } } };
+			Template::instance().render("products_list.tmpl", data, getPartials(), response);
 		}
 
 		static void getById(HttpRequest& request, HttpResponse& response)
 		{
-			std::cout << "Id: " << request.getUrlParam("productId") << std::endl;
+			mstch::map data{ { "productId", request.getUrlParam("productId") } };
+			Template::instance().render("product.tmpl", data, getPartials(), response);
 		}
 
-		static void getByName(const HttpRequest& request, HttpResponse& response)
+	private:
+		static std::map<std::string, std::string> getPartials()
 		{
-			std::cout << "Name: " <<  std::endl;
+			return { { "header", "header.tmpl" },{ "footer", "footer.tmpl" } };
 		}
 	};
 

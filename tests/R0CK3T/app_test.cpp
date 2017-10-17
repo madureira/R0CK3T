@@ -54,11 +54,9 @@ namespace unit_test {
 
 	BOOST_AUTO_TEST_CASE(should_extract_numeric_param_from_url)
 	{
-		App app;
-		app.route("/client/:id", &DummyClass::dummyFunction);
-
 		HttpRequest request;
 
+		App app;
 		app.extractParamsFromUrl("/client/123", "/client/:id", request);
 
 		BOOST_REQUIRE_EQUAL("123", request.getUrlParam("id"));
@@ -66,11 +64,9 @@ namespace unit_test {
 
 	BOOST_AUTO_TEST_CASE(should_extract_text_param_from_url)
 	{
-		App app;
-		app.route("/client/:email", &DummyClass::dummyFunction);
-
 		HttpRequest request;
 
+		App app;
 		app.extractParamsFromUrl("/another/test@test.com", "/another/:email", request);
 
 		BOOST_REQUIRE_EQUAL("test@test.com", request.getUrlParam("email"));

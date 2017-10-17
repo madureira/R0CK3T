@@ -3,51 +3,67 @@ An ultra-fast C++ micro web framework
 
 ![stability-wip](https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg)
 
-## How to use
+## Basic usage
 
+### config.json
+```json
+{
+  "address": "127.0.0.1",
+  "port": "8080"
+}
+```
+
+### home_controller.h
 ```c++
-// file: product_controller.h
-
 #include "R0CK3T.h"
-#include <iostream>
 
 using namespace R0CK3T;
 
-class ProductController {
+class HomeController {
 public:
 	static void index(const HttpRequest& request, HttpResponse& response)
 	{
-		std::cout << ">> List of products <<" << std::endl;
-	}
-
-	static void getById(const HttpRequest& request, HttpResponse& response)
-	{
-		std::cout << "Id: " << request.urlParams.at("productId") << std::endl;
+		json data;
+		data["message"] = "Hello World";
+		JSON::render(data, response);
 	}
 };
 ```
-```c++
-// file: main.cpp
 
+### main.cpp
+```c++
 #include "R0CK3T.h"
-#include "product_controller.h"
+#include "home_controller.h"
 
 using namespace R0CK3T;
 
 int main()
 {
-	Server server("127.0.0.1", 8080, "/absolute/path/to/assets");
+	Server server;
 
 	auto app = server.app();
 
-	app->route("/products", &ProductController::index);
-	app->route("/products/:productId", &ProductController::getById);
+	app->route("/", &HomeController::index);
 
 	server.run();
 
 	return 0;
 }
 ```
+
+### output
+```json
+{
+  "message": "Hello World"
+}
+```
+
+## [Documentation](https://github.com/madureira/R0CK3T/Readme-Guide.md)
+
+## Libraries
+
+* [mstch](https://github.com/no1msd/mstch)
+* [nlohmann/json](https://github.com/nlohmann/json)
 
 ## Requirements
 

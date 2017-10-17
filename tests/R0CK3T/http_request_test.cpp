@@ -23,6 +23,19 @@ namespace unit_test {
 		BOOST_REQUIRE_EQUAL("", request.getUrlParam("some_param"));
 	}
 
+	BOOST_AUTO_TEST_CASE(should_get_header)
+	{
+		Header header;
+		header.name = "User-Agent";
+		header.value = "Chrome/61.0.3163";
+
+		HttpRequest request;
+		request.headers.push_back(header);
+
+		BOOST_REQUIRE_EQUAL("User-Agent", request.headers[0].name);
+		BOOST_REQUIRE_EQUAL("Chrome/61.0.3163", request.headers[0].value);
+	}
+
 	BOOST_AUTO_TEST_SUITE_END()
 
 }
