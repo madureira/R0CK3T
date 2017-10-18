@@ -1,23 +1,40 @@
-# README guidelines
+# Documentation
 This doc will guide you to build your own application using R0CK3T through a project example.
 
-## Project structure
+## Prerequisites
+- C++11
+- [Boost](http://www.boost.org/) (1.65.1)
+
+## Usage
+
+### 1. Install prerequisites
+
+### 2. Generate project structure
+The `project structure`, should look like:
+
 ```
-- config.json
-- main.cpp
-- controllers/
-    - home_controller.cpp
-    - api_controller.cpp
-- templates/
-    - index.tmpl
-    - header.tmpl
-    - footer.tmpl
-- include/
-    - R0CK3T.h
-    - R0CK3T/
+project/
+├── config.json
+├── main.cpp
+├── controllers/
+│   ├── home_controller.h
+│   └── api_controller.h
+├── templates/
+│   ├── index.tmpl
+│   ├── header.tmpl
+│   └── footer.tmpl
+└── include/
+│   ├── R0CK3T.h
+│   └── R0CK3T/
+│       ├── renderer/
+│       ├── vendors/
+│       ├── app.cpp
+│       ├── app.h
+│       └── ...
+└── bin/
 ```
 
-### config.json
+#### config.json
 ```json
 {
   "address": "127.0.0.1",
@@ -26,7 +43,7 @@ This doc will guide you to build your own application using R0CK3T through a pro
 }
 ```
 
-### templates/header.tmpl
+#### templates/header.tmpl
 ```html
 <html>
 <head>
@@ -35,20 +52,20 @@ This doc will guide you to build your own application using R0CK3T through a pro
 <body>
 ```
 
-### templates/index.tmpl
+#### templates/index.tmpl
 ```html
 {{> header}}
 <h1>{{ title }}</h1>
 {{> footer}}
 ```
 
-### templates/footer.tmpl
+#### templates/footer.tmpl
 ```html
 </body>
 </html>
 ```
 
-### controllers/home_controller.h
+#### controllers/home_controller.h
 ```c++
 #include "../include/R0CK3T.h"
 
@@ -67,7 +84,7 @@ public:
 };
 ```
 
-### controllers/api_controller.h
+#### controllers/api_controller.h
 ```c++
 #include "../include/R0CK3T.h"
 
@@ -95,7 +112,7 @@ public:
 };
 ```
 
-### main.cpp
+#### main.cpp
 ```c++
 #include "include/R0CK3T.h"
 #include "controllers/home_controller.h"
@@ -109,12 +126,71 @@ int main()
 
   auto app = server.app();
 
-  app->route("/", &HomeController::index);
-  app->route("/products", &ApiController::productsList);
-  app->route("/products/:id", &ApiController::productById);
+  app->get("/", &HomeController::index);
+  app->get("/products", &ApiController::productsList);
+  app->get("/products/:id", &ApiController::productById);
 
   server.run();
 
   return 0;
 }
 ```
+
+### 3. Build project
+
+### 4. Start the web server
+```sh
+$ project/bin/app start
+```
+
+### 5. Acess the resources
+```
+http://localhost:8080/
+```
+
+```html
+<html>
+<head>
+  <title>Template Test</title>
+</head>
+<body>
+  <h1>Hello World</h1>
+</body>
+</html>
+```
+
+```
+http://localhost:8080/products
+```
+
+```json
+[
+  {
+    "id": 123,
+    "name": "C++ Book"
+  },
+  {
+    "id": 456,
+    "name": "Java Book"
+  }
+]
+```
+
+```
+http://localhost:8080/products/123
+```
+
+```json
+{
+  "id": 123,
+  "name": "C++ Book",
+  "price": {
+    "from": 60,
+    "to": 39.99
+  }
+}
+```
+
+## Author
+
+[Rafael Madureira](https://github.com/madureira)

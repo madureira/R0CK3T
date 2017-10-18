@@ -11,9 +11,9 @@ int main()
 
 	auto app = server.app();
 
-	app->route("/", &HomeController::index);
-	app->route("/products", &ProductController::index);
-	app->route("/products/:productId", &ProductController::getById);
+	app->get("/", &HomeController::index);
+	app->get("/products", &ProductController::index);
+	app->get("/products/:productId", &ProductController::getById);
 
 	server.run();
 

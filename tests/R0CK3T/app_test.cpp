@@ -14,42 +14,60 @@ namespace unit_test {
 		static void anotherDummyFunction() { }
 	};
 
-	BOOST_AUTO_TEST_CASE(should_find_a_registered_resource)
+	BOOST_AUTO_TEST_CASE(should_find_a_registered_resource_get_method)
 	{
 		App app;
-		app.route("/test", &DummyClass::dummyFunction);
-		app.route("/test/:dummyParam", &DummyClass::anotherDummyFunction);
+		app.get("/test", &DummyClass::dummyFunction);
+		app.post("/test/:dummyParam", &DummyClass::anotherDummyFunction);
 
-		BOOST_REQUIRE_EQUAL("/test", app.findResource("/test"));
+		BOOST_REQUIRE_EQUAL("/test", app.findResource("/test", "GET"));
+	}
+
+	BOOST_AUTO_TEST_CASE(should_find_a_registered_resource_post_method)
+	{
+		App app;
+		app.post("/test", &DummyClass::dummyFunction);
+		app.get("/test/:dummyParam", &DummyClass::anotherDummyFunction);
+
+		BOOST_REQUIRE_EQUAL("/test", app.findResource("/test", "POST"));
+	}
+
+	BOOST_AUTO_TEST_CASE(should_find_a_registered_resource_put_method)
+	{
+		App app;
+		app.get("/test", &DummyClass::dummyFunction);
+		app.put("/test/:dummyParam", &DummyClass::anotherDummyFunction);
+
+		BOOST_REQUIRE_EQUAL("/test/:dummyParam", app.findResource("/test/123", "PUT"));
 	}
 
 	BOOST_AUTO_TEST_CASE(should_find_a_registered_resource_with_url_param)
 	{
 		App app;
-		app.route("/test", &DummyClass::dummyFunction);
-		app.route("/test/:dummyParam", &DummyClass::anotherDummyFunction);
+		app.get("/test", &DummyClass::dummyFunction);
+		app.get("/test/:dummyParam", &DummyClass::anotherDummyFunction);
 
-		BOOST_REQUIRE_EQUAL("/test/:dummyParam", app.findResource("/test/123"));
+		BOOST_REQUIRE_EQUAL("/test/:dummyParam", app.findResource("/test/123", "GET"));
 	}
 
 	BOOST_AUTO_TEST_CASE(should_find_a_registered_resource_with_end_slash)
 	{
 		App app;
-		app.route("/test/", &DummyClass::dummyFunction);
-		app.route("/another", &DummyClass::anotherDummyFunction);
+		app.get("/test/", &DummyClass::dummyFunction);
+		app.get("/another", &DummyClass::anotherDummyFunction);
 
-		BOOST_REQUIRE_EQUAL("/test", app.findResource("/test"));
-		BOOST_REQUIRE_EQUAL("/another", app.findResource("/another/"));
+		BOOST_REQUIRE_EQUAL("/test", app.findResource("/test", "GET"));
+		BOOST_REQUIRE_EQUAL("/another", app.findResource("/another/", "GET"));
 	}
 
 	BOOST_AUTO_TEST_CASE(should_find_a_registered_resource_with_multiple_params)
 	{
 		App app;
-		app.route("/test/:id/name/:name/price/:price", &DummyClass::dummyFunction);
-		app.route("/another/:id/product/:name", &DummyClass::anotherDummyFunction);
+		app.get("/test/:id/name/:name/price/:price", &DummyClass::dummyFunction);
+		app.get("/another/:id/product/:name", &DummyClass::anotherDummyFunction);
 
-		BOOST_REQUIRE_EQUAL("/test/:id/name/:name/price/:price", app.findResource("/test/123/name/something/price/22.50"));
-		BOOST_REQUIRE_EQUAL("/another/:id/product/:name", app.findResource("/another/456/product/notebook/"));
+		BOOST_REQUIRE_EQUAL("/test/:id/name/:name/price/:price", app.findResource("/test/123/name/something/price/22.50", "GET"));
+		BOOST_REQUIRE_EQUAL("/another/:id/product/:name", app.findResource("/another/456/product/notebook/", "GET"));
 	}
 
 	BOOST_AUTO_TEST_CASE(should_extract_numeric_param_from_url)

@@ -16,15 +16,23 @@ namespace R0CK3T {
 		App();
 		~App();
 
-		void route(std::string route, void* fn);
+		void get(std::string route, void* fn);
+		void post(std::string route, void* fn);
+		void put(std::string route, void* fn);
+		void del(std::string route, void* fn);
+
 		void exec(std::string route, const HttpRequest& request, HttpResponse& response);
-		std::string findResource(std::string resource);
+		std::string findResource(std::string resource, std::string httpMethod);
 		void extractParamsFromUrl(std::string requestUrl, std::string resource, HttpRequest& request);
 
 	private:
 		std::string removeLastSlash(std::string uri);
+		std::map<std::string, void*>* findResourcesByMethod(std::string httpMethod);
 
-		std::map<std::string, void*> m_routesPtr;
+		std::map<std::string, void*> m_GETs;
+		std::map<std::string, void*> m_POSTs;
+		std::map<std::string, void*> m_PUTs;
+		std::map<std::string, void*> m_DELETEs;
 	};
 
 }

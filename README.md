@@ -43,7 +43,7 @@ int main()
 
 	auto app = server.app();
 
-	app->route("/", &HomeController::index);
+	app->get("/", &HomeController::index);
 
 	server.run();
 
@@ -58,7 +58,10 @@ int main()
 }
 ```
 
-## [Documentation](https://github.com/madureira/R0CK3T/blob/master/Readme-Guide.md)
+## Documentation
+- [Example](https://github.com/madureira/R0CK3T/blob/master/docs/project_example.md)
+- Rest
+- Templates
 
 ## Libraries
 

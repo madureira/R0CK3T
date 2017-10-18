@@ -6,20 +6,39 @@ namespace R0CK3T {
 	}
 
 	App::~App() {
-		// clear pointers
+		m_GETs.clear();
+		m_POSTs.clear();
+		m_PUTs.clear();
+		m_DELETEs.clear();
 	}
 
-	void App::route(std::string route, void* fn)
+	void App::get(std::string route, void* fn)
 	{
-		route = removeLastSlash(route);
-		m_routesPtr[route] = fn;
+		m_GETs[removeLastSlash(route)] = fn;
+	}
+
+	void App::post(std::string route, void* fn)
+	{
+		m_POSTs[removeLastSlash(route)] = fn;
+	}
+
+	void App::put(std::string route, void* fn)
+	{
+		m_PUTs[removeLastSlash(route)] = fn;
+	}
+
+	void App::del(std::string route, void* fn)
+	{
+		m_DELETEs[removeLastSlash(route)] = fn;
 	}
 
 	void App::exec(std::string route, const HttpRequest& request, HttpResponse& response)
 	{
-		auto search = m_routesPtr.find(route);
+		std::map<std::string, void*>* resourcesPtrs = findResourcesByMethod(request.method);
 
-		if (search != m_routesPtr.end())
+		auto search = resourcesPtrs->find(route);
+
+		if (search != resourcesPtrs->end())
 		{
 			try {
 				reinterpret_cast<void(*)(const HttpRequest&, HttpResponse&)> (search->second)(request, response);
@@ -36,13 +55,15 @@ namespace R0CK3T {
 		}
 	}
 
-	std::string App::findResource(std::string resource)
+	std::string App::findResource(std::string resource, std::string httpMethod)
 	{
 		resource = removeLastSlash(resource);
 
 		std::string resourceMatch;
 
-		for (auto res : m_routesPtr)
+		std::map<std::string, void*>* resourcesPtrs = findResourcesByMethod(httpMethod);
+
+		for (auto res : *resourcesPtrs)
 		{
 			std::string url = boost::regex_replace(res.first, boost::regex("(:.[^/]+)"), "(.[^/]+)");
 			url = "^" + url + "$";
@@ -98,14 +119,34 @@ namespace R0CK3T {
 	{
 		if (uri.length() > 1) {
 			std::string::iterator it = uri.end() - 1;
-
 			if (*it == '/')
-			{
 				uri.erase(it);
-			}
+		}
+		return uri;
+	}
+
+	std::map<std::string, void*>* App::findResourcesByMethod(std::string httpMethod)
+	{
+		std::map<std::string, void*>* resourcesPtrs = nullptr;
+
+		if (httpMethod == "GET")
+		{
+			resourcesPtrs = &m_GETs;
+		}
+		else if (httpMethod == "POST")
+		{
+			resourcesPtrs = &m_POSTs;
+		}
+		else if (httpMethod == "PUT")
+		{
+			resourcesPtrs = &m_PUTs;
+		}
+		else if (httpMethod == "DELETE")
+		{
+			resourcesPtrs = &m_DELETEs;
 		}
 
-		return uri;
+		return resourcesPtrs;
 	}
 
 }

@@ -32,48 +32,48 @@ namespace R0CK3T {
 			return;
 		}
 
-		std::string resourceMatch = m_app->findResource(requestPath);
+		std::string resourceMatch = m_app->findResource(requestPath, request.method);
 
 		if (!resourceMatch.empty())
 		{
 			m_app->extractParamsFromUrl(requestPath, resourceMatch, request);
 			m_app->exec(resourceMatch, request, response);
 		}
-		/*
-		if (requestPath[requestPath.size() - 1] == '/')
-		{
-			requestPath += "index.html";
-		}
+		else {
+			if (requestPath[requestPath.size() - 1] == '/')
+			{
+				requestPath += "index.html";
+			}
 
-		std::size_t lastSlashPos = requestPath.find_last_of("/");
-		std::size_t lastDotPos = requestPath.find_last_of(".");
-		std::string extension;
+			std::size_t lastSlashPos = requestPath.find_last_of("/");
+			std::size_t lastDotPos = requestPath.find_last_of(".");
+			std::string extension;
 
-		if (lastDotPos != std::string::npos && lastDotPos > lastSlashPos)
-		{
-			extension = requestPath.substr(lastDotPos + 1);
-		}
+			if (lastDotPos != std::string::npos && lastDotPos > lastSlashPos)
+			{
+				extension = requestPath.substr(lastDotPos + 1);
+			}
 
-		std::string fullPath = m_documentRoot + requestPath;
-		std::ifstream is(fullPath.c_str(), std::ios::in | std::ios::binary);
-		if (!is)
-		{
-			response = HttpResponse::stockReply(HttpResponse::not_found);
-			return;
-		}
+			std::string fullPath = m_documentRoot + requestPath;
+			std::ifstream is(fullPath.c_str(), std::ios::in | std::ios::binary);
+			if (!is)
+			{
+				response = HttpResponse::stockReply(HttpResponse::not_found);
+				return;
+			}
 
-		response.status = HttpResponse::ok;
-		char buffer[512];
-		while (is.read(buffer, sizeof(buffer)).gcount() > 0)
-		{
-			response.content.append(buffer, is.gcount());
+			response.status = HttpResponse::ok;
+			char buffer[512];
+			while (is.read(buffer, sizeof(buffer)).gcount() > 0)
+			{
+				response.content.append(buffer, is.gcount());
+			}
+			response.headers.resize(2);
+			response.headers[0].name = "Content-Length";
+			response.headers[0].value = std::to_string(response.content.size());
+			response.headers[1].name = "Content-Type";
+			response.headers[1].value = mime_types::extensionToType(extension);
 		}
-		response.headers.resize(2);
-		response.headers[0].name = "Content-Length";
-		response.headers[0].value = std::to_string(response.content.size());
-		response.headers[1].name = "Content-Type";
-		response.headers[1].value = mime_types::extensionToType(extension);
-		*/
 	}
 
 	bool RequestHandler::urlDecode(const std::string& input, std::string& output)
