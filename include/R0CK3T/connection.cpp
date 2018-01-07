@@ -31,6 +31,12 @@ namespace R0CK3T {
 				if (result == RequestParser::GOOD)
 				{
 					m_requestHandler.handleRequest(m_httpRequest, m_httpResponse);
+
+					if (m_httpResponse.headers.empty() || m_httpResponse.headers[1].name == "Content-Type" && m_httpResponse.headers[1].value == "")
+					{
+						m_httpResponse = m_httpResponse.stockReply(HttpResponse::StatusType::internal_server_error);
+						std::cout << "ERROR: \"Content-Type\" was not defined in HttpResponse <Header>, please use a json or a template renderer!" << std::endl;
+					}
 					write();
 				}
 				else if (result == RequestParser::BAD)

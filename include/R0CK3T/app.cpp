@@ -45,7 +45,7 @@ namespace R0CK3T {
 			}
 			catch (const std::exception& e)
 			{
-				std::cerr << "Error trying to execute route function" << std::endl;
+				std::cerr << "Error: Trying to execute route function" << std::endl;
 				std::cerr << e.what() << std::endl;
 			}
 		}

@@ -12,7 +12,11 @@ namespace R0CK3T {
 	public:
 		static void render(json data, HttpResponse& response)
 		{
-			response.status = HttpResponse::ok;
+			if (!response.hasStatus())
+			{
+				response.status = HttpResponse::ok;
+			}
+			
 			response.content = data.dump();
 			response.headers.resize(2);
 			response.headers[0].name = "Content-Length";

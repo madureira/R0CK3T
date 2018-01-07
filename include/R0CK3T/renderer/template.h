@@ -56,7 +56,11 @@ namespace R0CK3T {
 				response.content = mstch::render(loadTemplate(templateName), data, partials);
 			}
 
-			response.status = HttpResponse::ok;
+			if (!response.hasStatus())
+			{
+				response.status = HttpResponse::ok;
+			}
+
 			response.headers.resize(2);
 			response.headers[0].name = "Content-Length";
 			response.headers[0].value = std::to_string(response.content.size());

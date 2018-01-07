@@ -5,38 +5,22 @@ namespace R0CK3T {
 
 	namespace status_strings {
 
-		const std::string ok =
-			"HTTP/1.0 200 OK\r\n";
-		const std::string created =
-			"HTTP/1.0 201 Created\r\n";
-		const std::string accepted =
-			"HTTP/1.0 202 Accepted\r\n";
-		const std::string no_content =
-			"HTTP/1.0 204 No Content\r\n";
-		const std::string multiple_choices =
-			"HTTP/1.0 300 Multiple Choices\r\n";
-		const std::string moved_permanently =
-			"HTTP/1.0 301 Moved Permanently\r\n";
-		const std::string moved_temporarily =
-			"HTTP/1.0 302 Moved Temporarily\r\n";
-		const std::string not_modified =
-			"HTTP/1.0 304 Not Modified\r\n";
-		const std::string bad_request =
-			"HTTP/1.0 400 Bad Request\r\n";
-		const std::string unauthorized =
-			"HTTP/1.0 401 Unauthorized\r\n";
-		const std::string forbidden =
-			"HTTP/1.0 403 Forbidden\r\n";
-		const std::string not_found =
-			"HTTP/1.0 404 Not Found\r\n";
-		const std::string internal_server_error =
-			"HTTP/1.0 500 Internal Server Error\r\n";
-		const std::string not_implemented =
-			"HTTP/1.0 501 Not Implemented\r\n";
-		const std::string bad_gateway =
-			"HTTP/1.0 502 Bad Gateway\r\n";
-		const std::string service_unavailable =
-			"HTTP/1.0 503 Service Unavailable\r\n";
+		const std::string ok = "HTTP/1.0 200 OK\r\n";
+		const std::string created = "HTTP/1.0 201 Created\r\n";
+		const std::string accepted = "HTTP/1.0 202 Accepted\r\n";
+		const std::string no_content = "HTTP/1.0 204 No Content\r\n";
+		const std::string multiple_choices = "HTTP/1.0 300 Multiple Choices\r\n";
+		const std::string moved_permanently = "HTTP/1.0 301 Moved Permanently\r\n";
+		const std::string moved_temporarily = "HTTP/1.0 302 Moved Temporarily\r\n";
+		const std::string not_modified = "HTTP/1.0 304 Not Modified\r\n";
+		const std::string bad_request = "HTTP/1.0 400 Bad Request\r\n";
+		const std::string unauthorized = "HTTP/1.0 401 Unauthorized\r\n";
+		const std::string forbidden = "HTTP/1.0 403 Forbidden\r\n";
+		const std::string not_found = "HTTP/1.0 404 Not Found\r\n";
+		const std::string internal_server_error = "HTTP/1.0 500 Internal Server Error\r\n";
+		const std::string not_implemented = "HTTP/1.0 501 Not Implemented\r\n";
+		const std::string bad_gateway = "HTTP/1.0 502 Bad Gateway\r\n";
+		const std::string service_unavailable = "HTTP/1.0 503 Service Unavailable\r\n";
 
 		boost::asio::const_buffer toBuffer(HttpResponse::StatusType status)
 		{
@@ -238,6 +222,32 @@ namespace R0CK3T {
 		response.headers[1].name = "Content-Type";
 		response.headers[1].value = "text/html";
 		return response;
+	}
+
+	bool HttpResponse::hasStatus()
+	{
+		switch (this->status)
+		{
+			case HttpResponse::ok:
+			case HttpResponse::created:
+			case HttpResponse::accepted:
+			case HttpResponse::no_content:
+			case HttpResponse::multiple_choices:
+			case HttpResponse::moved_permanently:
+			case HttpResponse::moved_temporarily:
+			case HttpResponse::not_modified:
+			case HttpResponse::bad_request:
+			case HttpResponse::unauthorized:
+			case HttpResponse::forbidden:
+			case HttpResponse::not_found:
+			case HttpResponse::internal_server_error:
+			case HttpResponse::not_implemented:
+			case HttpResponse::bad_gateway:
+			case HttpResponse::service_unavailable:
+				return true;
+			default:
+				return false;
+		}
 	}
 
 }

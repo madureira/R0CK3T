@@ -35,6 +35,8 @@ namespace R0CK3T {
 
 		std::vector<boost::asio::const_buffer> toBuffers();
 
+		bool hasStatus();
+
 		static HttpResponse stockReply(StatusType status);
 	};
 

@@ -58,6 +58,8 @@ namespace R0CK3T {
 	void Server::run()
 	{
 		std::cout << "R0CK3T running..." << std::endl;
+		std::cout << "Listen at: " << Config::getInstance().setting().address << ":" << Config::getInstance().setting().port << std::endl;
+
 		m_ioService.run();
 	}
 
