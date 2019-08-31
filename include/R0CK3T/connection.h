@@ -1,13 +1,13 @@
 #pragma once
 
-#include <iostream>
 #include <array>
 #include <memory>
+#include <iostream>
 #include <boost/asio.hpp>
-#include "http_response.h"
 #include "http_request.h"
-#include "request_handler.h"
+#include "http_response.h"
 #include "request_parser.h"
+#include "request_handler.h"
 
 namespace R0CK3T {
 

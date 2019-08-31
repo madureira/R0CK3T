@@ -1,12 +1,12 @@
 #pragma once
 
-#include <boost/filesystem.hpp>
-#include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/path.hpp>
-#include <boost/asio.hpp>
-#include <iostream>
 #include <string>
 #include <memory>
+#include <iostream>
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
+#include <boost/asio.hpp>
 #include "vendors/nlohmann/json.hpp"
 #include "connection.h"
 #include "connection_manager.h"
@@ -33,7 +33,7 @@ namespace R0CK3T {
 	private:
 		void accept();
 		void awaitStop();
-		
+
 		ConnectionManager m_connectionManager;
 		RequestHandler m_requestHandler;
 		std::shared_ptr<App> m_app;

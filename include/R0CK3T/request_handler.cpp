@@ -1,10 +1,10 @@
-#include "request_handler.h"
+#include <iostream>
+#include <cstdarg>
+#include "app.h"
 #include "mime_types.h"
 #include "http_response.h"
 #include "http_request.h"
-#include "app.h"
-#include <iostream>
-#include <cstdarg>
+#include "request_handler.h"
 
 namespace R0CK3T {
 

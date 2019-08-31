@@ -12,7 +12,7 @@ namespace example {
 		{
 			json data = { { { "id", 123 },{ "name", "C++ Book" } },{ { "id", 456 },{ "name", "Java Book" } } };
 
-			JSON::render(data, response);
+			response.json(data);
 		}
 	};
 

@@ -1,12 +1,12 @@
 #pragma once
 
+#include <map>
+#include <string>
+#include <iostream>
+#include <boost/regex.hpp>
+#include <boost/algorithm/string/replace.hpp>
 #include "http_request.h"
 #include "http_response.h"
-#include <boost/algorithm/string/replace.hpp>
-#include <boost/regex.hpp>
-#include <iostream>
-#include <string>
-#include <map>
 
 namespace R0CK3T {
 

@@ -4,7 +4,7 @@
 #include "connection.h"
 
 namespace R0CK3T {
-	
+
 	class ConnectionManager
 	{
 	public:

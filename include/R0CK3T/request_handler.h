@@ -19,7 +19,7 @@ namespace R0CK3T {
 		RequestHandler& operator=(const RequestHandler) = delete;
 
 		explicit RequestHandler(const std::string& documentRoot);
-		
+
 		void addApp(std::shared_ptr<App> app);
 
 		void handleRequest(HttpRequest& request, HttpResponse& response);

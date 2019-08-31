@@ -86,7 +86,7 @@ namespace R0CK3T {
 		boost::match_results<std::string::const_iterator> keyMatches;
 
 		std::vector<std::string> foundKeys;
-		
+
 		while (boost::regex_search(begin, end, keyMatches, boost::regex("(:.[^/]*)")))
 		{
 			std::string key(keyMatches[1].first, keyMatches[2].second);

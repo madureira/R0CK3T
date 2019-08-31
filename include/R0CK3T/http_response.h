@@ -3,7 +3,11 @@
 #include <string>
 #include <vector>
 #include <boost/asio.hpp>
-#include "header.h"
+#include "./vendors/nlohmann/json.hpp"
+#include "./mime_types.h"
+#include "./header.h"
+
+using jsonObject = nlohmann::json;
 
 namespace R0CK3T {
 
@@ -38,6 +42,10 @@ namespace R0CK3T {
 		bool hasStatus();
 
 		static HttpResponse stockReply(StatusType status);
+
+		void json(jsonObject data);
+
+		void send(std::string data);
 	};
 
 }

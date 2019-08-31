@@ -1,8 +1,7 @@
-#include "http_response.h"
 #include <string>
+#include "http_response.h"
 
 namespace R0CK3T {
-
 	namespace status_strings {
 
 		const std::string ok = "HTTP/1.0 200 OK\r\n";
@@ -26,40 +25,40 @@ namespace R0CK3T {
 		{
 			switch (status)
 			{
-				case HttpResponse::ok:
-					return boost::asio::buffer(ok);
-				case HttpResponse::created:
-					return boost::asio::buffer(created);
-				case HttpResponse::accepted:
-					return boost::asio::buffer(accepted);
-				case HttpResponse::no_content:
-					return boost::asio::buffer(no_content);
-				case HttpResponse::multiple_choices:
-					return boost::asio::buffer(multiple_choices);
-				case HttpResponse::moved_permanently:
-					return boost::asio::buffer(moved_permanently);
-				case HttpResponse::moved_temporarily:
-					return boost::asio::buffer(moved_temporarily);
-				case HttpResponse::not_modified:
-					return boost::asio::buffer(not_modified);
-				case HttpResponse::bad_request:
-					return boost::asio::buffer(bad_request);
-				case HttpResponse::unauthorized:
-					return boost::asio::buffer(unauthorized);
-				case HttpResponse::forbidden:
-					return boost::asio::buffer(forbidden);
-				case HttpResponse::not_found:
-					return boost::asio::buffer(not_found);
-				case HttpResponse::internal_server_error:
-					return boost::asio::buffer(internal_server_error);
-				case HttpResponse::not_implemented:
-					return boost::asio::buffer(not_implemented);
-				case HttpResponse::bad_gateway:
-					return boost::asio::buffer(bad_gateway);
-				case HttpResponse::service_unavailable:
-					return boost::asio::buffer(service_unavailable);
-				default:
-					return boost::asio::buffer(internal_server_error);
+			case HttpResponse::ok:
+				return boost::asio::buffer(ok);
+			case HttpResponse::created:
+				return boost::asio::buffer(created);
+			case HttpResponse::accepted:
+				return boost::asio::buffer(accepted);
+			case HttpResponse::no_content:
+				return boost::asio::buffer(no_content);
+			case HttpResponse::multiple_choices:
+				return boost::asio::buffer(multiple_choices);
+			case HttpResponse::moved_permanently:
+				return boost::asio::buffer(moved_permanently);
+			case HttpResponse::moved_temporarily:
+				return boost::asio::buffer(moved_temporarily);
+			case HttpResponse::not_modified:
+				return boost::asio::buffer(not_modified);
+			case HttpResponse::bad_request:
+				return boost::asio::buffer(bad_request);
+			case HttpResponse::unauthorized:
+				return boost::asio::buffer(unauthorized);
+			case HttpResponse::forbidden:
+				return boost::asio::buffer(forbidden);
+			case HttpResponse::not_found:
+				return boost::asio::buffer(not_found);
+			case HttpResponse::internal_server_error:
+				return boost::asio::buffer(internal_server_error);
+			case HttpResponse::not_implemented:
+				return boost::asio::buffer(not_implemented);
+			case HttpResponse::bad_gateway:
+				return boost::asio::buffer(bad_gateway);
+			case HttpResponse::service_unavailable:
+				return boost::asio::buffer(service_unavailable);
+			default:
+				return boost::asio::buffer(internal_server_error);
 			}
 		}
 
@@ -172,40 +171,40 @@ namespace R0CK3T {
 		{
 			switch (status)
 			{
-				case HttpResponse::ok:
-					return ok;
-				case HttpResponse::created:
-					return created;
-				case HttpResponse::accepted:
-					return accepted;
-				case HttpResponse::no_content:
-					return no_content;
-				case HttpResponse::multiple_choices:
-					return multiple_choices;
-				case HttpResponse::moved_permanently:
-					return moved_permanently;
-				case HttpResponse::moved_temporarily:
-					return moved_temporarily;
-				case HttpResponse::not_modified:
-					return not_modified;
-				case HttpResponse::bad_request:
-					return bad_request;
-				case HttpResponse::unauthorized:
-					return unauthorized;
-				case HttpResponse::forbidden:
-					return forbidden;
-				case HttpResponse::not_found:
-					return not_found;
-				case HttpResponse::internal_server_error:
-					return internal_server_error;
-				case HttpResponse::not_implemented:
-					return not_implemented;
-				case HttpResponse::bad_gateway:
-					return bad_gateway;
-				case HttpResponse::service_unavailable:
-					return service_unavailable;
-				default:
-					return internal_server_error;
+			case HttpResponse::ok:
+				return ok;
+			case HttpResponse::created:
+				return created;
+			case HttpResponse::accepted:
+				return accepted;
+			case HttpResponse::no_content:
+				return no_content;
+			case HttpResponse::multiple_choices:
+				return multiple_choices;
+			case HttpResponse::moved_permanently:
+				return moved_permanently;
+			case HttpResponse::moved_temporarily:
+				return moved_temporarily;
+			case HttpResponse::not_modified:
+				return not_modified;
+			case HttpResponse::bad_request:
+				return bad_request;
+			case HttpResponse::unauthorized:
+				return unauthorized;
+			case HttpResponse::forbidden:
+				return forbidden;
+			case HttpResponse::not_found:
+				return not_found;
+			case HttpResponse::internal_server_error:
+				return internal_server_error;
+			case HttpResponse::not_implemented:
+				return not_implemented;
+			case HttpResponse::bad_gateway:
+				return bad_gateway;
+			case HttpResponse::service_unavailable:
+				return service_unavailable;
+			default:
+				return internal_server_error;
 			}
 		}
 
@@ -228,26 +227,56 @@ namespace R0CK3T {
 	{
 		switch (this->status)
 		{
-			case HttpResponse::ok:
-			case HttpResponse::created:
-			case HttpResponse::accepted:
-			case HttpResponse::no_content:
-			case HttpResponse::multiple_choices:
-			case HttpResponse::moved_permanently:
-			case HttpResponse::moved_temporarily:
-			case HttpResponse::not_modified:
-			case HttpResponse::bad_request:
-			case HttpResponse::unauthorized:
-			case HttpResponse::forbidden:
-			case HttpResponse::not_found:
-			case HttpResponse::internal_server_error:
-			case HttpResponse::not_implemented:
-			case HttpResponse::bad_gateway:
-			case HttpResponse::service_unavailable:
-				return true;
-			default:
-				return false;
+		case HttpResponse::ok:
+		case HttpResponse::created:
+		case HttpResponse::accepted:
+		case HttpResponse::no_content:
+		case HttpResponse::multiple_choices:
+		case HttpResponse::moved_permanently:
+		case HttpResponse::moved_temporarily:
+		case HttpResponse::not_modified:
+		case HttpResponse::bad_request:
+		case HttpResponse::unauthorized:
+		case HttpResponse::forbidden:
+		case HttpResponse::not_found:
+		case HttpResponse::internal_server_error:
+		case HttpResponse::not_implemented:
+		case HttpResponse::bad_gateway:
+		case HttpResponse::service_unavailable:
+			return true;
+		default:
+			return false;
 		}
+	}
+
+	void HttpResponse::json(jsonObject data)
+	{
+		if (!hasStatus())
+		{
+			status = HttpResponse::ok;
+		}
+
+		content = data.dump();
+		headers.resize(2);
+		headers[0].name = "Content-Length";
+		headers[0].value = std::to_string(content.size());
+		headers[1].name = "Content-Type";
+		headers[1].value = "application/json";
+	}
+
+	void HttpResponse::send(std::string data)
+	{
+		if (!hasStatus())
+		{
+			status = HttpResponse::ok;
+		}
+
+		content = data;
+		headers.resize(2);
+		headers[0].name = "Content-Length";
+		headers[0].value = std::to_string(content.size());
+		headers[1].name = "Content-Type";
+		headers[1].value = mime_types::extensionToType("html");
 	}
 
 }

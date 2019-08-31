@@ -25,7 +25,8 @@ public:
 	{
 		json data;
 		data["message"] = "Hello World";
-		JSON::render(data, response);
+
+		response.json(data);
 	}
 };
 ```

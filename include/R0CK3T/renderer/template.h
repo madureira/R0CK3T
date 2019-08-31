@@ -1,16 +1,12 @@
 #pragma once
 
-#include "../http_response.h"
-#include "../mime_types.h"
-#include "../vendors/mstch/mstch.hpp"
-#include "../config.h"
+#include <map>
 #include <string>
 #include <fstream>
-#include <regex>
-#include <map>
+#include "../vendors/mstch/mstch.hpp"
 
 namespace R0CK3T {
-	
+
 	class Template
 	{
 	public:
@@ -23,21 +19,22 @@ namespace R0CK3T {
 			return instance;
 		}
 
-		void render(std::string templateName, mstch::map data, HttpResponse& response)
+		std::string render(std::string templateName, mstch::map& data)
 		{
-			instance().present(templateName, data, {}, response);
+			std::map<std::string, std::string> tmpls;
+			return present(templateName, data, tmpls);
 		}
 
-		void render(std::string templateName, mstch::map data, std::map<std::string, std::string> partials, HttpResponse& response)
+		std::string render(std::string templateName, mstch::map& data, std::map<std::string, std::string>& partials)
 		{
 			std::map<std::string, std::string> tmpls;
 
-			for (auto const &templateFile : partials)
+			for (auto const& templateFile : partials)
 			{
 				tmpls[templateFile.first] = instance().loadTemplate(templateFile.second);
 			}
 
-			instance().present(templateName, data, tmpls, response);
+			return instance().present(templateName, data, tmpls);
 		}
 
 	private:
@@ -45,28 +42,14 @@ namespace R0CK3T {
 
 		std::map<std::string, std::string> m_templates;
 
-		void present(std::string templateName, mstch::map data, std::map<std::string, std::string> partials, HttpResponse& response)
+		std::string present(std::string& templateName, mstch::map& data, std::map<std::string, std::string>& partials)
 		{
 			if (partials.empty())
 			{
-				response.content = mstch::render(loadTemplate(templateName), data);
-			}
-			else
-			{
-				response.content = mstch::render(loadTemplate(templateName), data, partials);
+				return mstch::render(loadTemplate(templateName), data);
 			}
 
-			if (!response.hasStatus())
-			{
-				response.status = HttpResponse::ok;
-			}
-
-			response.headers.resize(2);
-			response.headers[0].name = "Content-Length";
-			response.headers[0].value = std::to_string(response.content.size());
-			response.headers[1].name = "Content-Type";
-			response.headers[1].value = mime_types::extensionToType("html");
-
+			return mstch::render(loadTemplate(templateName), data, partials);
 		}
 
 		std::string loadTemplate(std::string fileName)

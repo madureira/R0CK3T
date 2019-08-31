@@ -66,28 +66,28 @@ namespace R0CK3T {
 	void Server::accept()
 	{
 		m_acceptor.async_accept(m_socket, [this](boost::system::error_code errorCode)
-		{
-			if (!m_acceptor.is_open())
 			{
-				return;
-			}
+				if (!m_acceptor.is_open())
+				{
+					return;
+				}
 
-			if (!errorCode)
-			{
-				m_connectionManager.start(std::make_shared<Connection>(std::move(m_socket), m_connectionManager, m_requestHandler));
-			}
+				if (!errorCode)
+				{
+					m_connectionManager.start(std::make_shared<Connection>(std::move(m_socket), m_connectionManager, m_requestHandler));
+				}
 
-			accept();
-		});
+				accept();
+			});
 	}
 
 	void Server::awaitStop()
 	{
 		m_signals.async_wait([this](boost::system::error_code /*ec*/, int /*signo*/)
-		{
-			m_acceptor.close();
-			m_connectionManager.stopAll();
-		});
+			{
+				m_acceptor.close();
+				m_connectionManager.stopAll();
+			});
 	}
 
 }

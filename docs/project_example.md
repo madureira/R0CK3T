@@ -79,7 +79,9 @@ public:
 
         std::map<std::string, std::string> partials = {{ "header", "header.tmpl" },{ "footer", "footer.tmpl" }};
 
-        Template::instance().render("index.tmpl", data, partials, response);
+        auto html = Template::instance().render("index.tmpl", data, partials);
+
+        response.send(html);
     }
 };
 ```
@@ -96,7 +98,7 @@ public:
     {
         json data = {{{"id", 123}, {"name", "C++ Book"}}, {{"id", 456}, {"name", "Java Book"}}};
 
-        JSON::render(data, response);
+        response.json(data);
     }
 
     static void productById(const HttpRequest& request, HttpResponse& response)
@@ -107,7 +109,7 @@ public:
         data["price"]["from"] = 60.00;
         data["price"]["to"] = 39.99;
 
-        JSON::render(data, response);
+        response.json(data);
     }
 };
 ```
